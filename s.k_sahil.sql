@@ -7956,6 +7956,162 @@ from customers where country = "USA" and creditlimit > 50000;
 select distinct city from customers;
 select distinct count(city) from customers;
 
+-- grup by
+use sakila;
+show databases;
+show tables;
+ select * from payment;
+ select amount from payment group by amount;
+ 
+ -- using count into group by 
+ 
+  select amount,count(amount) as total from payment group by amount;
+ 
+-- in
+select * from payment where amount in ('5.99','2.99');
+
+select * from payment where customer_id = "21" and staff_id = "2" and amount > 2.99;
+
+-- like  
+select * from customer
+where first_name like "a%";
+
+select * from customer
+where first_name like "%n%";
+
+select * from customer
+where first_name like "%e";
+
+-- limit/top
+select *  from customer limit 2;
+
+-- union 
+create database aaa;
+use aaa;
+show tables;
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Email VARCHAR(100)
+);
+
+CREATE TABLE Suppliers (
+    SupplierID INT PRIMARY KEY,
+    CompanyName VARCHAR(100),
+    Email VARCHAR(100)
+);
+
+INSERT INTO Customers (CustomerID, FirstName, LastName, Email)
+VALUES
+    (1, 'Pankaj', 'Sharma', 'pankaj@codeswithpankaj.com'),
+    (2, 'Nishant', 'Patel', 'nishant@codeswithpankaj.com'),
+    (3, 'Kiran', 'Desai', 'kiran@codeswithpankaj.com'),
+    (4, 'Tanvi', 'Mehta', 'tanvi@codeswithpankaj.com'),
+    (5, 'Kritek', 'Singh', 'kritek@codeswithpankaj.com');
+
+INSERT INTO Suppliers (SupplierID, CompanyName, Email)
+VALUES
+    (101, 'ABC Inc.', 'abc@codeswithpankaj.com'),
+    (102, 'XYZ Ltd.', 'xyz@codeswithpankaj.com'),
+    (103, 'Company A', 'companya@p4n.in');
+    
+    select * from customers;
+select * from Suppliers;
+
+select email from customers union select email from Suppliers;
+
+-- not 
+
+show databases;
+
+use sk;
+
+show tables;
+
+select * from customer_list;
+
+select * from customer_list where not city = 'kabul';
+
+select * from customer_list where not country like  "a%";
+
+
+-- having
+
+
+
+use sakila;
+show tables;
+ select * from customers;
+use sk;
+show tables;
+
+select creditlimit, count( creditlimit ) from  customers group by  creditlimit  having min(creditlimit);
+
+
+-- SQL Keys
+
+-- SQL - Primary Key :
+
+use p4n1;
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50)
+);
+
+-- Inserting records into the "Employees" table
+INSERT INTO Employees (EmployeeID, FirstName, LastName)
+VALUES
+    (1, 'Pankaj', 'Sharma'),
+    (2, 'Nishant', 'Patel'),
+    (3, 'Kiran', 'Desai');
+
+-- FOREIGN KEY
+    
+CREATE TABLE p4n_Customers (
+    CustomerID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50)
+);
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    OrderDate DATE,
+    FOREIGN KEY (CustomerID) REFERENCES p4n_Customers(CustomerID)
+); 
+
+
+INSERT INTO p4n_Customers (CustomerID, FirstName, LastName)
+VALUES
+    (1, 'Pankaj', 'Sharma'),
+    (2, 'Nishant', 'Patel');
+    
+INSERT INTO p4n_Customers (CustomerID, FirstName, LastName)
+VALUES
+    (3, 'Joy', 'Sharma');
+    
+INSERT INTO Orders (OrderID, CustomerID, OrderDate)
+VALUES
+    (101, 1, '2023-01-15'),
+    (102, 2, '2023-02-20'); 
+    
+INSERT INTO Orders (OrderID, CustomerID, OrderDate)
+VALUES
+    (103, 3, '2023-01-15');
+    
+select * from p4n_customers;    
+select * from orders;    
+
+
+ 
+
+
+
+
+
+
  
 
 
