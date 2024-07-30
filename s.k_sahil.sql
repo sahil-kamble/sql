@@ -8102,7 +8102,185 @@ VALUES
     (103, 3, '2023-01-15');
     
 select * from p4n_customers;    
-select * from orders;    
+select * from orders;  
+
+use sk;
+show databases;
+show tables;
+
+
+select min(creditlimit) from customers;
+select max(creditlimit) from customers;
+
+-- Date and Time Functions
+
+select curdate();
+
+-- DATEDIFF(date1, date2)
+  select  * from orders;
+select ordernumber , customernumber , datediff(shippeddate,orderdate) as take_show from orders;
+
+select ordernumber , customernumber , datediff(curdate(),shippeddate) as take_show from orders;
+
+-- DATE_ADD(date, INTERVAL value unit)
+select ordernumber , customernumber ,date_add(orderdate, interval 10 day) as take_show from orders;
+select ordernumber , customernumber ,date_add(orderdate, interval 10 month) as take_show from orders;  
+select ordernumber , customernumber ,date_add(orderdate, interval 10 year) as take_show from orders;
+  
+  -- DATE_SUB(date, INTERVAL value unit)  
+  
+select ordernumber , shippeddate, date_sub(shippeddate , interval 10 day) as new_update from orders;   
+select ordernumber , shippeddate, date_sub(shippeddate , interval 10 month) as new_update from orders;   
+select ordernumber , shippeddate, date_sub(shippeddate , interval 10 year) as new_update from orders;
+
+
+select  ordernumber,shippeddate, DATE_FORMAT(shippeddate, '%Y-%m-%d') AS formatted_date FROM orders; 
+select  ordernumber,shippeddate, DATE_FORMAT(shippeddate, '%m-%Y-%d') AS formatted_date FROM orders; 
+select  ordernumber,shippeddate, DATE_FORMAT(shippeddate, '%Y-%m') AS formatted_date FROM orders; 
+select  ordernumber,shippeddate, DATE_FORMAT(shippeddate, '%Y') AS formatted_date FROM orders; 
+
+-- now curtime
+select  NOW() AS current_datetime;
+select  CURTIME();
+
+select * from customers;
+-- CONCAT()
+select customernumber,concat(contactfirstname,' ', contactlastname) as full_show from customers;
+
+
+
+select * from employees;
+
+-- UPPER()
+select upper(firstname) as full_show from employees;
+
+-- LEFT()
+select left(firstname , 4) as full_show from employees;
+
+--  right() 
+select right(firstname , 4) as full_show from employees;
+
+-- substring
+
+select distinct firstname , CONCAT(LEFT(firstname, 4),"@skc.in") AS first_name_short FROM employees;
+
+-- length
+
+select firstName, length( firstname) as nam_show from employees;
+
+-- REPLACE
+
+select firstName,replace(firstName, 'a', 'X') AS  firstName_replaced FROM employees;
+
+
+-- TRIM
+
+select firstName ,trim(firstName) as firstName_trimmed from employees;
+-- ltrim
+select firstName ,ltrim(firstName) as firstName_trimmed from employees;
+
+-- rtrim
+select firstName ,rtrim(firstName) as firstName_trimmed from employees;
+
+-- CHARINDEX
+
+SELECT CHARINDEX('a', city) AS position_of_a FROM p4n_employee;
+
+create database pikachu;
+use pikachu;
+
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Email VARCHAR(100)
+);
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    OrderDate DATE,
+    TotalAmount DECIMAL(10, 2)
+);
+
+INSERT INTO Customers (CustomerID, FirstName, LastName, Email)
+VALUES
+    (1, 'Pankaj', 'Sharma', 'pankaj@codeswithpankaj.com'),
+    (2, 'Nishant', 'Patel', 'nishant@codeswithpankaj.com'),
+    (3, 'Kiran', 'Desai', 'kiran@codeswithpankaj.com'),
+    (4, 'Tanvi', 'Mehta', 'tanvi@codeswithpankaj.com'),
+    (5, 'Kritek', 'Singh', 'kritek@codeswithpankaj.com');
+
+INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)
+VALUES
+    (101, 1, '2023-01-15', 250.00),
+    (102, 2, '2023-02-20', 120.50),
+    (103, 3, '2023-03-10', 320.75),
+    (105, 4, '2023-05-12', 210.00);
+
+
+
+select * from customers;
+
+select * from orders;
+ 
+ -- SELECT c.FirstName, c.LastName, o.OrderDate
+-- FROM Customers AS c
+ -- LEFT JOIN Orders AS o ON c.CustomerID = o.CustomerID;
+ 
+ select customers.firstname, customers.lastname, customers.email, orders.orderdate, orders.totalamount
+ from customers left join orders on customers.customerid = orders.customerid;
+ 
+  select customers.firstname, customers.lastname, customers.email, orders.orderdate, orders.totalamount
+ from customers right join orders on customers.customerid = orders.customerid;
+
+  select customers.firstname, customers.lastname, customers.email, orders.orderdate, orders.totalamount
+ from customers inner join orders on customers.customerid = orders.customerid;
+
+ 
+create database nm;
+
+use nm;
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Email VARCHAR(100)
+);
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    OrderDate DATE,
+    TotalAmount DECIMAL(10, 2)
+);
+INSERT INTO Customers (CustomerID, FirstName, LastName, Email)
+VALUES
+    (1, 'Pankaj', 'Sharma', 'pankaj@codeswithpankaj.com'),
+    (2, 'Nishant', 'Patel', 'nishant@codeswithpankaj.com'),
+    (3, 'Kiran', 'Desai', 'kiran@codeswithpankaj.com'),
+    (4, 'Tanvi', 'Mehta', 'tanvi@codeswithpankaj.com'),
+    (5, 'Kritek', 'Singh', 'kritek@codeswithpankaj.com');
+
+INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)
+VALUES
+    (101, 1, '2023-01-15', 250.00),
+    (102, 2, '2023-02-20', 120.50),
+    (103, 3, '2023-03-10', 320.75),
+    (105, 4, '2023-05-12', 210.00);
+    
+SELECT c.FirstName, c.LastName, o.OrderDate
+FROM Customers AS c
+LEFT JOIN Orders AS o ON c.CustomerID = o.CustomerID
+
+UNION ALL
+
+-- RIGHT JOIN to get all orders and their associated customers
+SELECT c.FirstName, c.LastName, o.OrderDate
+FROM Customers AS c
+RIGHT JOIN Orders AS o ON c.CustomerID = o.CustomerID
+WHERE c.CustomerID IS NULL;
+
 
 
  
